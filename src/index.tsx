@@ -6,6 +6,12 @@ const app = new Hono()
 // Serve static files
 app.use('/static/*', serveStatic({ root: './' }))
 
+// Favicon
+app.get('/favicon.ico', (c) => {
+  c.header('Content-Type', 'image/svg+xml')
+  return c.body(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="16" fill="#0D47A1"/><path d="M20 20 L50 10 L80 20 L80 55 Q80 80 50 90 Q20 80 20 55 Z" fill="#C41E3A" stroke="white" stroke-width="2"/><text x="50" y="62" text-anchor="middle" font-family="Arial Black, sans-serif" font-weight="900" font-size="36" fill="white">S</text></svg>`)
+})
+
 // Main page
 app.get('/', (c) => {
   return c.html(homePage())
@@ -43,6 +49,7 @@ function baseLayout(title: string, content: string, extraScripts = '') {
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="SINTRACGR - Sindicato Nacional de Trabajadores de la Contraloría General de la República del Perú. Defendiendo tus derechos laborales.">
   <title>${title} | SINTRACGR</title>
+  <link rel="icon" href="/favicon.ico" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
